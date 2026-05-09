@@ -2,38 +2,49 @@ import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+
 const FORM_ENDPOINT = "https://formspree.io/f/xpqbyvjg";
 
+
+// GM NEW VEHICLES LIST
 const VEHICLES = [
   "Chevrolet Silverado",
-  "GMC Sierra",
   "Chevrolet Equinox",
-  "GMC Terrain",
   "Chevrolet Tahoe",
+  "GMC Sierra",
   "GMC Yukon",
-  "Not sure yet"
+  "GMC Terrain",
+  "Cadillac Escalade",
+  "Cadillac XT5",
+  "Cadillac XT6",
+  "Buick Enclave",
+  "Buick Encore GX",
+  "Buick Envista",
+  "Used Vehicle (Specify Below)"
 ];
+
 
 export default function LeadForm() {
   const [form, setForm] = useState({
     fullName: "",
     phone: "",
+    email: "",
+    occupation: "",
+    salary: "",
+    creditScore: "",
     vehicle: "",
-    date: "",
-    time: ""
+    customVehicle: "",
+    preferredTime: ""
   });
 
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       const response = await fetch(FORM_ENDPOINT, {
         method: "POST",
@@ -42,117 +53,115 @@ export default function LeadForm() {
           Accept: "application/json"
         },
         body: JSON.stringify({
-          subject: `🔥 Test Drive Lead: ${form.fullName}`,
+          subject: `🔥 GM Elite Lead: ${form.fullName}`,
           ...form
         })
       });
-
       if (response.ok) {
         setSubmitted(true);
       }
     } catch (err) {
       console.error(err);
     }
-
     setLoading(false);
   };
+
 
   if (submitted) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black text-white">
         <div className="text-center max-w-md">
-          <h1 className="text-3xl font-bold mb-4">✅ You're Booked!</h1>
+          <h1 className="text-3xl font-bold mb-4">✅ You're Confirmed</h1>
           <p className="text-gray-300 mb-3">
-            Thank you for booking your test drive.
+            Your request has been received. We’ll confirm your visit shortly.
           </p>
-          <p className="text-gray-400">
-            Vince Santos will contact you shortly to confirm your appointment.
+          <p className="text-gray-400 mb-4">
+            Vince Santos — Woodbine GM
           </p>
+
+
+          https://www.google.com/maps/dir/?api=1&destination=Woodbine+GM+360+Rexdale+Blvd+Etobicoke+ON
         </div>
       </div>
     );
   }
-
   return (
     <div
       className="min-h-screen flex items-center justify-center p-6 text-white"
       style={{
         backgroundImage:
-          "linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1619767886558-efdc259cde1a')",
+          "linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70')",
         backgroundSize: "cover",
         backgroundPosition: "center"
       }}
     >
-      <Card className="w-full max-w-lg p-6 rounded-2xl bg-black/80 backdrop-blur-md shadow-2xl border border-gray-700">
+      <Card className="w-full max-w-lg p-8 rounded-2xl bg-black/90 backdrop-blur-lg shadow-2xl border border-gray-700">
         <CardContent>
-          <div className="text-center mb-4">
-            <h1 className="text-2xl font-bold">🚗 Book Your Test Drive</h1>
-            <p className="text-gray-400 text-sm">
-              Woodbine GM • Fast • Professional • No Obligation
+          <div className="text-center mb-6">
+            <h1 className="text-2xl font-bold">🚗 Woodbine GM Pre‑Approval</h1>
+            <p className="text-gray-400 text-sm mt-1">
+              Chevrolet • GMC • Cadillac • Buick
             </p>
           </div>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="space-y-3">
+              <p className="text-sm text-gray-400">Customer Information</p>
+              <input name="fullName" placeholder="Full Name" value={form.fullName} onChange={handleChange} className="w-full p-3 rounded bg-gray-900 border border-gray-700" required />
+              <input name="phone" placeholder="Phone Number" value={form.phone} onChange={handleChange} className="w-full p-3 rounded bg-gray-900 border border-gray-700" required />
+              <input name="email" placeholder="Email Address" value={form.email} onChange={handleChange} className="w-full p-3 rounded bg-gray-900 border border-gray-700" required />
+            </div>
+            <div className="space-y-3">
+              <p className="text-sm text-gray-400">Vehicle Selection</p>
+              <select name="vehicle" value={form.vehicle} onChange={handleChange} className="w-full p-3 rounded bg-gray-900 border border-gray-700" required>
+                <option value="">Select Vehicle (New)</option>
+                {VEHICLES.map((v) => (
+                  <option key={v} value={v}>{v}</option>
+                ))}
+              </select>
 
-            <input
-              name="fullName"
-              placeholder="Full Name"
-              value={form.fullName}
-              onChange={handleChange}
-              className="w-full p-3 rounded bg-gray-900 border border-gray-700"
-              required
-            />
+              {form.vehicle === "Used Vehicle (Specify Below)" && (
+                <input name="customVehicle" placeholder="Enter Used Vehicle" value={form.customVehicle} onChange={handleChange} className="w-full p-3 rounded bg-gray-900 border border-gray-700" />
+              )}
+            </div>
 
-            <input
-              name="phone"
-              placeholder="Phone Number"
-              value={form.phone}
-              onChange={handleChange}
-              className="w-full p-3 rounded bg-gray-900 border border-gray-700"
-              required
-            />
+            <div className="space-y-3">
+              <p className="text-sm text-gray-400">Financial Details</p>
+              <input name="occupation" placeholder="Occupation" value={form.occupation} onChange={handleChange} className="w-full p-3 rounded bg-gray-900 border border-gray-700" />
+              <input name="salary" placeholder="Annual Income" value={form.salary} onChange={handleChange} className="w-full p-3 rounded bg-gray-900 border border-gray-700" />
+              <input name="creditScore" placeholder="Credit Score (Optional)" value={form.creditScore} onChange={handleChange} className="w-full p-3 rounded bg-gray-900 border border-gray-700" />
+            </div>
 
-            <select
-              name="vehicle"
-              value={form.vehicle}
-              onChange={handleChange}
-              className="w-full p-3 rounded bg-gray-900 border border-gray-700"
-              required
-            >
-              <option value="">Select Vehicle</option>
-              {VEHICLES.map((v) => (
-                <option key={v} value={v}>{v}</option>
-              ))}
-            </select>
-
-            <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-3">
+              <p className="text-sm text-gray-400">Appointment</p>
               <input
-                type="date"
-                name="date"
-                value={form.date}
-                onChange={handleChange}
-                className="w-full p-3 rounded bg-gray-900 border border-gray-700"
-                required
-              />
-              <input
-                type="time"
-                name="time"
-                value={form.time}
+                name="preferredTime"
+                placeholder="What day & time works best?"
+                value={form.preferredTime}
                 onChange={handleChange}
                 className="w-full p-3 rounded bg-gray-900 border border-gray-700"
                 required
               />
             </div>
 
-
-            <Button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-              {loading ? "Booking..." : "Book Test Drive ✅"}
+            <Button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700">
+              {loading ? "Submitting..." : "Submit Application ✅"}
             </Button>
+
           </form>
 
+          <div className="text-center mt-6 space-y-3">
+            <div className="text-sm text-gray-400">
+              Vince Santos • Woodbine GM
+            </div>
 
-          <div className="text-center mt-4 text-sm text-gray-400">
-            Vince Santos • Woodbine GM
+            <div className="flex flex-col gap-2">
+              <a href="tel:+14166600000" className="bg-gray-800 py-2 rounded">📞 Call Vince</a>
+              <a href="sms:+14166600000" className="bg-gray-800 py-2 rounded">💬 Text Vince</a>
+              <a href="https://www.google.com/maps/dir/?api=1&destination=Woodbine+GM+360+Rexdale+Blvd+Etobicoke+ON" target="_blank" className="bg-blue-700 py-2 rounded">📍 Get Directions</a>
+            </div>
+
           </div>
+
         </CardContent>
       </Card>
     </div>
