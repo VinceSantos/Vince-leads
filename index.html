@@ -1,0 +1,130 @@
+import React, { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+// ✅ Active Formspree endpoint
+const FORM_ENDPOINT = "https://formspree.io/f/xpqbyvjg";
+
+const VEHICLES = [
+  "Chevrolet Silverado",
+  "GMC Sierra",
+  "Chevrolet Equinox",
+  "GMC Terrain",
+  "Chevrolet Tahoe",
+  "GMC Yukon",
+  "Not sure yet"
+];
+export default function LeadForm() {
+  const [form, setForm] = useState({
+    fullName: "",
+    address: "",
+    phone: "",
+    occupation: "",
+    salary: "",
+    creditScore: "",
+    vehicle: ""
+  });
+
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setStatus("Sending...");
+
+
+    try {
+      const response = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify({
+          subject: `🔥 New Lead: ${form.fullName}`,
+          priority: "high",
+          ...form
+        })
+      });
+
+
+      if (response.ok) {
+        setStatus("✅ You're pre‑qualified! Vince will contact you shortly.");
+        setForm({
+          fullName: "",
+          address: "",
+          phone: "",
+          occupation: "",
+          salary: "",
+          creditScore: "",
+          vehicle: ""
+        });
+      } else {
+        setStatus("❌ Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      setStatus("❌ Network error. Please try again.");
+    }
+
+
+    setLoading(false);
+  };
+
+  return (
+    <div className="min-h-screen bg-black text-white flex items-center justify-center p-6 bg-gradient-to-br from-black via-zinc-900 to-black">
+      <Card className="w-full max-w-lg p-6 rounded-2xl bg-zinc-900 shadow-2xl border border-zinc-700">
+        <CardContent>
+          <h1 className="text-2xl font-bold mb-1 tracking-wide">⚡ Get Approved in 60 Seconds</h1>
+          <p className="mb-6 text-sm text-gray-400">
+            Fast • No obligation • Secure — Vince Santos will contact you.
+          </p>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input name="fullName" placeholder="Full Name" value={form.fullName} onChange={handleChange} className="w-full p-3 rounded bg-zinc-800" required />
+            <input name="phone" placeholder="Phone Number" value={form.phone} onChange={handleChange} className="w-full p-3 rounded bg-zinc-800" required />
+            <select name="vehicle" value={form.vehicle} onChange={handleChange} className="w-full p-3 rounded bg-zinc-800" required>
+              <option value="">Select Vehicle</option>
+              {VEHICLES.map((v) => (
+                <option key={v} value={v}>{v}</option>
+              ))}
+            </select>
+            <input name="salary" placeholder="Annual Income" value={form.salary} onChange={handleChange} className="w-full p-3 rounded bg-zinc-800" />
+            <input name="creditScore" placeholder="Credit Score (optional)" value={form.creditScore} onChange={handleChange} className="w-full p-3 rounded bg-zinc-800" />
+
+
+            <input name="occupation" placeholder="Occupation" value={form.occupation} onChange={handleChange} className="w-full p-3 rounded bg-zinc-800" />
+            <input name="address" placeholder="Address" value={form.address} onChange={handleChange} className="w-full p-3 rounded bg-zinc-800" />
+
+
+            <Button type="submit" disabled={loading} className="w-full mt-4 bg-blue-600 hover:bg-blue-700">
+              {loading ? "Submitting..." : "Get Approved Now"}
+            </Button>
+
+
+            {status && (
+              <p className="text-sm text-center mt-4 text-gray-300">{status}</p>
+            )}
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+/*
+🔥 ELITE FEATURES ADDED:
+- Instant auto-send to your email
+- High-conversion headline (“Get Approved in 60 Seconds”)
+- Vehicle dropdown (GM focused)
+- Mobile-first design (perfect for QR scans)
+- Priority tagging for leads
+🚀 NEXT UPGRADE IDEAS:
+- SMS alerts (instant phone notification)
+- Auto-follow-up email/text
+- Calendar booking (test drives)
+- Lead scoring (hot vs cold buyers)
+*/
