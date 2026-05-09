@@ -1,169 +1,196 @@
-import React, { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-
-
-const FORM_ENDPOINT = "https://formspree.io/f/xpqbyvjg";
-
-
-// GM NEW VEHICLES LIST
-const VEHICLES = [
-  "Chevrolet Silverado",
-  "Chevrolet Equinox",
-  "Chevrolet Tahoe",
-  "GMC Sierra",
-  "GMC Yukon",
-  "GMC Terrain",
-  "Cadillac Escalade",
-  "Cadillac XT5",
-  "Cadillac XT6",
-  "Buick Enclave",
-  "Buick Encore GX",
-  "Buick Envista",
-  "Used Vehicle (Specify Below)"
-];
-
+import React, { useState, useEffect } from "react";
 
 export default function LeadForm() {
-  const [form, setForm] = useState({
-    fullName: "",
-    phone: "",
-    email: "",
-    occupation: "",
-    salary: "",
-    creditScore: "",
-    vehicle: "",
-    customVehicle: "",
-    preferredTime: ""
-  });
+  const [form, setForm] = useState({});
+  const [leads, setLeads] = useState([]);
+  const [view, setView] = useState("form");
 
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("crm_leads") || "[]");
+    setLeads(saved);
+  }, []);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const response = await fetch(FORM_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify({
-          subject: `🔥 GM Elite Lead: ${form.fullName}`,
-          ...form
-        })
-      });
-      if (response.ok) {
-        setSubmitted(true);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-    setLoading(false);
+
+  const createCalendarLink = () => {
+    if (!form.date || !form.time) return "#";
+
+    const start = new Date(`${form.date}T${form.time}`);
+    const end = new Date(start.getTime() + 60 * 60 * 1000);
+
+    const format = (d) =>
+      d.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+
+    return `https://www.google.com/calendar/render?action=TEMPLATE&text=Woodbine+GM+Test+Drive&dates=${format(start)}/${format(end)}&location=Woodbine+GM+360+Rexdale+Blvd`;
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  if (submitted) {
+    const newLead = {
+      ...form,
+      status: "New",
+      dateCreated: new Date().toLocaleString()
+    };
+
+    const updated = [newLead, ...leads];
+    setLeads(updated);
+    localStorage.setItem("crm_leads", JSON.stringify(updated));
+
+    setForm({});
+    setView("dashboard");
+
+    if (form.date && form.time) {
+      window.open(createCalendarLink(), "_blank");
+    }
+  };
+
+  const updateStatus = (index, status) => {
+    const updated = [...leads];
+    updated[index].status = status;
+    setLeads(updated);
+    localStorage.setItem("crm_leads", JSON.stringify(updated));
+  };
+
+  // ===== CRM DASHBOARD =====
+  if (view === "dashboard") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-black text-white">
-        <div className="text-center max-w-md">
-          <h1 className="text-3xl font-bold mb-4">✅ You're Confirmed</h1>
-          <p className="text-gray-300 mb-3">
-            Your request has been received. We’ll confirm your visit shortly.
-          </p>
-          <p className="text-gray-400 mb-4">
-            Vince Santos — Woodbine GM
-          </p>
+      <div className="min-h-screen bg-black text-white p-6">
+        <h1 className="text-3xl font-bold mb-6">📊 Automotive CRM</h1>
+        {leads.length === 0 ? (
+          <p>No leads yet</p>
+        ) : (
+          <div className="grid gap-4">
+            {leads.map((lead, i) => (
+              <div key={i} className="bg-zinc-900 p-4 rounded-xl border border-gray-700">
+                <div className="flex justify-between">
+                  <h2 className="font-bold text-lg">{lead.fullName || "Unnamed Lead"}</h2>
+                  <span className="text-sm text-gray-400">{lead.dateCreated}</span>
+                </div>
 
 
-          https://www.google.com/maps/dir/?api=1&destination=Woodbine+GM+360+Rexdale+Blvd+Etobicoke+ON
-        </div>
+                <div className="text-sm mt-2 space-y-1">
+                  <p>📞 {lead.phone}</p>
+                  <p>✉️ {lead.email}</p>
+                  <p>🚗 Wants: {lead.vehicle}</p>
+                  <p>🔁 Driving: {lead.currentCar}</p>
+                  <p>📅 {lead.date} {lead.time}</p>
+                </div>
+
+
+                <div className="mt-3">
+                  <select
+                    value={lead.status}
+                    onChange={(e) => updateStatus(i, e.target.value)}
+                    className="bg-black border border-gray-600 p-1 rounded"
+                  >
+                    <option>New</option>
+                    <option>Contacted</option>
+                    <option>Appointment Set</option>
+                    <option>Sold</option>
+                  </select>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <button onClick={() => setView("form")} className="mt-6 bg-gray-700 px-4 py-2 rounded">
+          ⬅ Back to Application
+        </button>
       </div>
     );
   }
+
+  // ===== AUTOMOTIVE APPLICATION =====
   return (
     <div
-      className="min-h-screen flex items-center justify-center p-6 text-white"
       style={{
+        minHeight: "100vh",
         backgroundImage:
-          "linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70')",
+          "linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.95)), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70')",
         backgroundSize: "cover",
-        backgroundPosition: "center"
+        backgroundPosition: "center",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        color: "white"
       }}
     >
-      <Card className="w-full max-w-lg p-8 rounded-2xl bg-black/90 backdrop-blur-lg shadow-2xl border border-gray-700">
-        <CardContent>
-          <div className="text-center mb-6">
-            <h1 className="text-2xl font-bold">🚗 Woodbine GM Pre‑Approval</h1>
-            <p className="text-gray-400 text-sm mt-1">
-              Chevrolet • GMC • Cadillac • Buick
-            </p>
+      <div style={{ maxWidth: 900, width: "100%", padding: 20 }}>
+
+        {/* HEADER */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div>
+            <h1 style={{ fontSize: 28 }}>WOODBINE GM APPLICATION</h1>
+            <p style={{ fontSize: 12, opacity: 0.7 }}>Chevrolet • GMC • Cadillac • Buick</p>
           </div>
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="space-y-3">
-              <p className="text-sm text-gray-400">Customer Information</p>
-              <input name="fullName" placeholder="Full Name" value={form.fullName} onChange={handleChange} className="w-full p-3 rounded bg-gray-900 border border-gray-700" required />
-              <input name="phone" placeholder="Phone Number" value={form.phone} onChange={handleChange} className="w-full p-3 rounded bg-gray-900 border border-gray-700" required />
-              <input name="email" placeholder="Email Address" value={form.email} onChange={handleChange} className="w-full p-3 rounded bg-gray-900 border border-gray-700" required />
-            </div>
-            <div className="space-y-3">
-              <p className="text-sm text-gray-400">Vehicle Selection</p>
-              <select name="vehicle" value={form.vehicle} onChange={handleChange} className="w-full p-3 rounded bg-gray-900 border border-gray-700" required>
-                <option value="">Select Vehicle (New)</option>
-                {VEHICLES.map((v) => (
-                  <option key={v} value={v}>{v}</option>
-                ))}
-              </select>
+          <button onClick={() => setView("dashboard")}>📊</button>
+        </div>
 
-              {form.vehicle === "Used Vehicle (Specify Below)" && (
-                <input name="customVehicle" placeholder="Enter Used Vehicle" value={form.customVehicle} onChange={handleChange} className="w-full p-3 rounded bg-gray-900 border border-gray-700" />
-              )}
-            </div>
+        {/* FORM CONTAINER */}
+        <div style={{ background: "rgba(0,0,0,0.9)", padding: 25, marginTop: 20, borderRadius: 12 }}>
+          <form onSubmit={handleSubmit}>
 
-            <div className="space-y-3">
-              <p className="text-sm text-gray-400">Financial Details</p>
-              <input name="occupation" placeholder="Occupation" value={form.occupation} onChange={handleChange} className="w-full p-3 rounded bg-gray-900 border border-gray-700" />
-              <input name="salary" placeholder="Annual Income" value={form.salary} onChange={handleChange} className="w-full p-3 rounded bg-gray-900 border border-gray-700" />
-              <input name="creditScore" placeholder="Credit Score (Optional)" value={form.creditScore} onChange={handleChange} className="w-full p-3 rounded bg-gray-900 border border-gray-700" />
-            </div>
+            {/* CUSTOMER INFO */}
+            <h3>Customer Information</h3>
+            <input name="fullName" placeholder="Full Name" onChange={handleChange} className="input" />
+            <input name="phone" placeholder="Phone Number" onChange={handleChange} className="input" />
+            <input name="email" placeholder="Email" onChange={handleChange} className="input" />
+            <input name="currentCar" placeholder="Current Vehicle" onChange={handleChange} className="input" />
 
-            <div className="space-y-3">
-              <p className="text-sm text-gray-400">Appointment</p>
-              <input
-                name="preferredTime"
-                placeholder="What day & time works best?"
-                value={form.preferredTime}
-                onChange={handleChange}
-                className="w-full p-3 rounded bg-gray-900 border border-gray-700"
-                required
-              />
+            {/* VEHICLE */}
+            <h3 style={{ marginTop: 20 }}>Vehicle Interest</h3>
+            <input name="vehicle" placeholder="Desired Vehicle (2026/2027)" onChange={handleChange} className="input" />
+            {/* FINANCIAL */}
+            <h3 style={{ marginTop: 20 }}>Financial</h3>
+            <select name="creditScenario" onChange={handleChange} className="input">
+              <option>Credit Scenario</option>
+              <option>Great</option>
+              <option>Good</option>
+              <option>Okay</option>
+              <option>Bad</option>
+            </select>
+
+            {/* APPOINTMENT */}
+            <h3 style={{ marginTop: 20 }}>Book Appointment</h3>
+            <div style={{ display: "flex", gap: 10 }}>
+              <input type="date" name="date" onChange={handleChange} className="input" />
+              <input type="time" name="time" onChange={handleChange} className="input" />
             </div>
 
-            <Button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700">
-              {loading ? "Submitting..." : "Submit Application ✅"}
-            </Button>
+            {/* SUBMIT */}
+            <button className="submit">Submit Application ✅</button>
 
           </form>
+        </div>
 
-          <div className="text-center mt-6 space-y-3">
-            <div className="text-sm text-gray-400">
-              Vince Santos • Woodbine GM
-            </div>
+        <style>{`
+          h3 { margin-top: 10px; font-size: 14px; color: #aaa }
+          .input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 8px;
+            background: #111;
+            border: 1px solid #333;
+            color: white;
+          }
 
-            <div className="flex flex-col gap-2">
-              <a href="tel:+14166600000" className="bg-gray-800 py-2 rounded">📞 Call Vince</a>
-              <a href="sms:+14166600000" className="bg-gray-800 py-2 rounded">💬 Text Vince</a>
-              <a href="https://www.google.com/maps/dir/?api=1&destination=Woodbine+GM+360+Rexdale+Blvd+Etobicoke+ON" target="_blank" className="bg-blue-700 py-2 rounded">📍 Get Directions</a>
-            </div>
-
-          </div>
-
-        </CardContent>
-      </Card>
+          .submit {
+            margin-top: 25px;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(90deg, #16a34a, #22c55e);
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 16px;
+          }
+        `}</style>
+      </div>
     </div>
   );
 }
