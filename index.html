@@ -40,7 +40,6 @@ input, select {
   border: 1px solid #ccc;
 }
 
-/* Button */
 button {
   width: 100%;
   padding: 15px;
@@ -53,17 +52,7 @@ button {
   cursor: pointer;
 }
 
-.footer {
-  margin-top: 10px;
-  background: black;
-  color: white;
-  text-align: center;
-  padding: 8px;
-  border-radius: 10px;
-  font-size: 12px;
-}
-
-/* Leads */
+/* Leads dashboard */
 #leads {
   margin-top: 20px;
   width: 380px;
@@ -71,106 +60,5 @@ button {
 
 .lead {
   background: white;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 10px;
-}
-</style>
 
-</head>
-
-<body>
-
-<div class="header">
-  <h1>WOODBINE GM</h1>
-  <p>Showroom Application</p>
-</div>
-
-<form class="card" onsubmit="submitForm(event)">
-
-  <h2>Customer</h2>
-
-  <input id="name" placeholder="Full Name" required>
-  <input id="phone" placeholder="Phone" required>
-  <input id="email" placeholder="Email" required>
-  <input id="job" placeholder="Occupation / Company">
-
-  <h2>Select Vehicle</h2>
-
-  <select id="vehicle">
-    <option>Select Vehicle</option>
-    <option>Silverado</option>
-    <option>Tahoe</option>
-    <option>Sierra</option>
-    <option>Yukon</option>
-    <option>Envista</option>
-  </select>
-
-  <select id="payment">
-    <option>Select Payment Type</option>
-    <option>Finance</option>
-    <option>Lease</option>
-    <option>Cash</option>
-  </select>
-
-  <button type="submit">Submit Application ✅</button>
-
-  <div class="footer">OMVIC REGISTERED DEALER</div>
-
-</form>
-
-<div id="leads"></div>
-
-<script>
-
-// ✅ Load saved leads when page opens
-let leads = JSON.parse(localStorage.getItem("leads")) || [];
-
-displayLeads();
-
-// ✅ Submit form
-function submitForm(e) {
-  e.preventDefault();
-
-  let lead = {
-    name: document.getElementById("name").value,
-    phone: document.getElementById("phone").value,
-    email: document.getElementById("email").value,
-    job: document.getElementById("job").value,
-    vehicle: document.getElementById("vehicle").value,
-    payment: document.getElementById("payment").value
-  };
-
-  leads.push(lead);
-
-  // ✅ SAVE permanently
-  localStorage.setItem("leads", JSON.stringify(leads));
-
-  displayLeads();
-
-  alert("✅ Lead Saved!");
-
-  document.querySelector("form").reset();
-}
-
-// ✅ Show leads
-function displayLeads() {
-  let container = document.getElementById("leads");
-  container.innerHTML = "<h3>Saved Leads</h3>";
-
-  leads.forEach(l => {
-    container.innerHTML += `
-      <div class="lead">
-        <b>${l.name}</b><br>
-        ${l.phone}<br>
-        ${l.vehicle} (${l.payment})
-      </div>
-    `;
-  });
-}
-
-</script>
-
-</body>
-</html>
 ``
