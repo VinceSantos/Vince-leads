@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+"use client";
+
+import { useState } from "react";
 
 const VEHICLES = {
   Chevrolet: [
@@ -27,7 +29,7 @@ const VEHICLES = {
   ]
 };
 
-export default function LeadForm() {
+export default function Home() {
   const [form, setForm] = useState({});
 
   const handleChange = (e) => {
@@ -39,24 +41,31 @@ export default function LeadForm() {
       className="min-h-screen flex items-center justify-center p-6"
       style={{
         backgroundImage:
-          "linear-gradient(rgba(0,0,0,0.5), rgba(255,255,255,0.9)), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70')",
-        backgroundSize: "cover"
+          "linear-gradient(rgba(0,0,0,0.6), rgba(255,255,255,0.85)), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70')",
+        backgroundSize: "cover",
+        backgroundPosition: "center"
       }}
     >
-      <div className="w-full max-w-2xl">
+      <div className="w-full max-w-xl">
 
-        {/* Header */}
-        <div className="text-center mb-6 text-white">
-          <h1 className="text-4xl font-bold">WOODBINE GM</h1>
-          <p className="text-lg">Showroom Application</p>
+        {/* HEADER */}
+        <div className="text-center text-white mb-6">
+          <h1 className="text-4xl font-extrabold tracking-wide">
+            WOODBINE GM
+          </h1>
+          <p className="text-lg opacity-90">
+            Showroom Application
+          </p>
         </div>
 
-        {/* Form Card */}
-        <div className="bg-white p-8 rounded-3xl shadow-xl space-y-6">
+        {/* CARD */}
+        <div className="bg-white rounded-3xl shadow-2xl p-8 space-y-6">
 
           {/* CUSTOMER */}
           <div>
-            <h2 className="text-xl font-bold text-center mb-4">Customer</h2>
+            <h2 className="text-xl font-bold text-center mb-4">
+              Customer
+            </h2>
 
             <input name="fullName" placeholder="Full Name" onChange={handleChange} className="input" />
             <input name="phone" placeholder="Phone" onChange={handleChange} className="input" />
@@ -64,35 +73,33 @@ export default function LeadForm() {
             <input name="occupation" placeholder="Occupation / Company" onChange={handleChange} className="input" />
           </div>
 
-          {/* VEHICLE */}
+          {/* VEHICLES */}
           <div>
-            <h2 className="text-xl font-bold text-center mb-4">Select Vehicle</h2>
+            <h2 className="text-xl font-bold text-center mb-4">
+              Select Vehicle
+            </h2>
 
-            <div className="space-y-3">
-              {Object.entries(VEHICLES).map(([make, models]) => (
-                <div key={make}>
-                  <p className="font-semibold mb-1">{make}</p>
+            {Object.entries(VEHICLES).map(([make, models]) => (
+              <div key={make} className="mb-3">
+                <p className="font-semibold mb-1">{make}</p>
 
-                  <select
-                    onChange={(e) =>
-                      setForm({ ...form, make, vehicle: e.target.value })
-                    }
-                    className="input"
-                  >
-                    <option>{make}</option>
-                    {models.map((model) => (
-                      <option key={model}>{model}</option>
-                    ))}
-                  </select>
-                </div>
-              ))}
-            </div>
+                <select
+                  onChange={(e) =>
+                    setForm({ ...form, make, vehicle: e.target.value })
+                  }
+                  className="input"
+                >
+                  <option>{make}</option>
+                  {models.map((model) => (
+                    <option key={model}>{model}</option>
+                  ))}
+                </select>
+              </div>
+            ))}
           </div>
 
           {/* PAYMENT TYPE */}
           <div>
-            <p className="text-sm font-semibold mb-2">Payment Type</p>
-
             <select
               name="paymentType"
               onChange={handleChange}
@@ -106,25 +113,27 @@ export default function LeadForm() {
           </div>
 
           {/* SUBMIT */}
-          <button className="w-full py-4 bg-green-500 text-white rounded-xl text-lg font-semibold">
-            Submit Application ✅
+          <button className="w-full py-4 bg-green-500 text-white rounded-xl text-lg font-semibold hover:bg-green-600 transition">
+            Submit Application
           </button>
 
           {/* FOOTER */}
-          <div className="bg-black text-white text-center py-2 rounded-lg text-sm">
+          <div className="bg-black text-white text-center py-2 rounded-xl text-sm">
             OMVIC REGISTERED DEALER
           </div>
 
         </div>
       </div>
 
-      <style>{`
+      {/* INPUT STYLE */}
+      <style jsx>{`
         .input {
           width: 100%;
           margin-top: 10px;
           padding: 12px;
-          border-radius: 10px;
+          border-radius: 12px;
           border: 1px solid #ccc;
+          font-size: 14px;
         }
       `}</style>
     </div>
