@@ -1,196 +1,132 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+
+const VEHICLES = {
+  Chevrolet: [
+    "Silverado",
+    "Colorado",
+    "Tahoe",
+    "Suburban",
+    "Equinox",
+    "Trailblazer",
+    "Traverse",
+    "Blazer"
+  ],
+  GMC: [
+    "Sierra",
+    "Canyon",
+    "Yukon",
+    "Yukon XL",
+    "Terrain",
+    "Acadia"
+  ],
+  Buick: [
+    "Envista",
+    "Encore GX",
+    "Envision",
+    "Enclave"
+  ]
+};
 
 export default function LeadForm() {
-  const [form, setForm] = useState({});
-  const [leads, setLeads] = useState([]);
-  const [view, setView] = useState("form");
+  const [form, setForm] = useState({});
 
-  useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("crm_leads") || "[]");
-    setLeads(saved);
-  }, []);
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  return (
+    <div
+      className="min-h-screen flex items-center justify-center p-6"
+      style={{
+        backgroundImage:
+          "linear-gradient(rgba(0,0,0,0.5), rgba(255,255,255,0.9)), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70')",
+        backgroundSize: "cover"
+      }}
+    >
+      <div className="w-full max-w-2xl">
 
-  const createCalendarLink = () => {
-    if (!form.date || !form.time) return "#";
+        {/* Header */}
+        <div className="text-center mb-6 text-white">
+          <h1 className="text-4xl font-bold">WOODBINE GM</h1>
+          <p className="text-lg">Showroom Application</p>
+        </div>
 
-    const start = new Date(`${form.date}T${form.time}`);
-    const end = new Date(start.getTime() + 60 * 60 * 1000);
+        {/* Form Card */}
+        <div className="bg-white p-8 rounded-3xl shadow-xl space-y-6">
 
-    const format = (d) =>
-      d.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+          {/* CUSTOMER */}
+          <div>
+            <h2 className="text-xl font-bold text-center mb-4">Customer</h2>
 
-    return `https://www.google.com/calendar/render?action=TEMPLATE&text=Woodbine+GM+Test+Drive&dates=${format(start)}/${format(end)}&location=Woodbine+GM+360+Rexdale+Blvd`;
-  };
+            <input name="fullName" placeholder="Full Name" onChange={handleChange} className="input" />
+            <input name="phone" placeholder="Phone" onChange={handleChange} className="input" />
+            <input name="email" placeholder="Email" onChange={handleChange} className="input" />
+            <input name="occupation" placeholder="Occupation / Company" onChange={handleChange} className="input" />
+          </div>
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+          {/* VEHICLE */}
+          <div>
+            <h2 className="text-xl font-bold text-center mb-4">Select Vehicle</h2>
 
-    const newLead = {
-      ...form,
-      status: "New",
-      dateCreated: new Date().toLocaleString()
-    };
+            <div className="space-y-3">
+              {Object.entries(VEHICLES).map(([make, models]) => (
+                <div key={make}>
+                  <p className="font-semibold mb-1">{make}</p>
 
-    const updated = [newLead, ...leads];
-    setLeads(updated);
-    localStorage.setItem("crm_leads", JSON.stringify(updated));
+                  <select
+                    onChange={(e) =>
+                      setForm({ ...form, make, vehicle: e.target.value })
+                    }
+                    className="input"
+                  >
+                    <option>{make}</option>
+                    {models.map((model) => (
+                      <option key={model}>{model}</option>
+                    ))}
+                  </select>
+                </div>
+              ))}
+            </div>
+          </div>
 
-    setForm({});
-    setView("dashboard");
+          {/* PAYMENT TYPE */}
+          <div>
+            <p className="text-sm font-semibold mb-2">Payment Type</p>
 
-    if (form.date && form.time) {
-      window.open(createCalendarLink(), "_blank");
-    }
-  };
+            <select
+              name="paymentType"
+              onChange={handleChange}
+              className="input"
+            >
+              <option>Select Payment Type</option>
+              <option>Finance</option>
+              <option>Lease</option>
+              <option>Cash</option>
+            </select>
+          </div>
 
-  const updateStatus = (index, status) => {
-    const updated = [...leads];
-    updated[index].status = status;
-    setLeads(updated);
-    localStorage.setItem("crm_leads", JSON.stringify(updated));
-  };
+          {/* SUBMIT */}
+          <button className="w-full py-4 bg-green-500 text-white rounded-xl text-lg font-semibold">
+            Submit Application ✅
+          </button>
 
-  // ===== CRM DASHBOARD =====
-  if (view === "dashboard") {
-    return (
-      <div className="min-h-screen bg-black text-white p-6">
-        <h1 className="text-3xl font-bold mb-6">📊 Automotive CRM</h1>
-        {leads.length === 0 ? (
-          <p>No leads yet</p>
-        ) : (
-          <div className="grid gap-4">
-            {leads.map((lead, i) => (
-              <div key={i} className="bg-zinc-900 p-4 rounded-xl border border-gray-700">
-                <div className="flex justify-between">
-                  <h2 className="font-bold text-lg">{lead.fullName || "Unnamed Lead"}</h2>
-                  <span className="text-sm text-gray-400">{lead.dateCreated}</span>
-                </div>
+          {/* FOOTER */}
+          <div className="bg-black text-white text-center py-2 rounded-lg text-sm">
+            OMVIC REGISTERED DEALER
+          </div>
 
+        </div>
+      </div>
 
-                <div className="text-sm mt-2 space-y-1">
-                  <p>📞 {lead.phone}</p>
-                  <p>✉️ {lead.email}</p>
-                  <p>🚗 Wants: {lead.vehicle}</p>
-                  <p>🔁 Driving: {lead.currentCar}</p>
-                  <p>📅 {lead.date} {lead.time}</p>
-                </div>
-
-
-                <div className="mt-3">
-                  <select
-                    value={lead.status}
-                    onChange={(e) => updateStatus(i, e.target.value)}
-                    className="bg-black border border-gray-600 p-1 rounded"
-                  >
-                    <option>New</option>
-                    <option>Contacted</option>
-                    <option>Appointment Set</option>
-                    <option>Sold</option>
-                  </select>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        <button onClick={() => setView("form")} className="mt-6 bg-gray-700 px-4 py-2 rounded">
-          ⬅ Back to Application
-        </button>
-      </div>
-    );
-  }
-
-  // ===== AUTOMOTIVE APPLICATION =====
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        backgroundImage:
-          "linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.95)), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        color: "white"
-      }}
-    >
-      <div style={{ maxWidth: 900, width: "100%", padding: 20 }}>
-
-        {/* HEADER */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <div>
-            <h1 style={{ fontSize: 28 }}>WOODBINE GM APPLICATION</h1>
-            <p style={{ fontSize: 12, opacity: 0.7 }}>Chevrolet • GMC • Cadillac • Buick</p>
-          </div>
-          <button onClick={() => setView("dashboard")}>📊</button>
-        </div>
-
-        {/* FORM CONTAINER */}
-        <div style={{ background: "rgba(0,0,0,0.9)", padding: 25, marginTop: 20, borderRadius: 12 }}>
-          <form onSubmit={handleSubmit}>
-
-            {/* CUSTOMER INFO */}
-            <h3>Customer Information</h3>
-            <input name="fullName" placeholder="Full Name" onChange={handleChange} className="input" />
-            <input name="phone" placeholder="Phone Number" onChange={handleChange} className="input" />
-            <input name="email" placeholder="Email" onChange={handleChange} className="input" />
-            <input name="currentCar" placeholder="Current Vehicle" onChange={handleChange} className="input" />
-
-            {/* VEHICLE */}
-            <h3 style={{ marginTop: 20 }}>Vehicle Interest</h3>
-            <input name="vehicle" placeholder="Desired Vehicle (2026/2027)" onChange={handleChange} className="input" />
-            {/* FINANCIAL */}
-            <h3 style={{ marginTop: 20 }}>Financial</h3>
-            <select name="creditScenario" onChange={handleChange} className="input">
-              <option>Credit Scenario</option>
-              <option>Great</option>
-              <option>Good</option>
-              <option>Okay</option>
-              <option>Bad</option>
-            </select>
-
-            {/* APPOINTMENT */}
-            <h3 style={{ marginTop: 20 }}>Book Appointment</h3>
-            <div style={{ display: "flex", gap: 10 }}>
-              <input type="date" name="date" onChange={handleChange} className="input" />
-              <input type="time" name="time" onChange={handleChange} className="input" />
-            </div>
-
-            {/* SUBMIT */}
-            <button className="submit">Submit Application ✅</button>
-
-          </form>
-        </div>
-
-        <style>{`
-          h3 { margin-top: 10px; font-size: 14px; color: #aaa }
-          .input {
-            width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            border-radius: 8px;
-            background: #111;
-            border: 1px solid #333;
-            color: white;
-          }
-
-          .submit {
-            margin-top: 25px;
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(90deg, #16a34a, #22c55e);
-            border: none;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 16px;
-          }
-        `}</style>
-      </div>
-    </div>
-  );
+      <style>{`
+        .input {
+          width: 100%;
+          margin-top: 10px;
+          padding: 12px;
+          border-radius: 10px;
+          border: 1px solid #ccc;
+        }
+      `}</style>
+    </div>
+  );
 }
