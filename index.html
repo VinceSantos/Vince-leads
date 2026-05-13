@@ -1,47 +1,59 @@
 <!DOCTYPE html>
 <html>
-<body style="font-family:Arial; background:black; color:white; text-align:center;">
+<body style="font-family:Arial; background:black; color:white; margin:0;">
 
-<h2>GM Preferred Pricing</h2>
+<div style="max-width:700px; margin:auto; padding:40px;">
 
-<form action="https://formsubmit.co/vsantos@woodbinegm.com" method="POST">
+<h1 style="text-align:center; color:#60a5fa; margin-bottom:20px;">
+GM Preferred Pricing Application
+</h1>
+
+https://formsubmit.co/vsantos@woodbinegm.com
 
 <input type="hidden" name="_captcha" value="false">
 <input type="hidden" name="_subject" value="New GM Lead">
 <input type="hidden" name="_autoresponse" value="Thanks for your inquiry! This is Vince from Woodbine GM. I will contact you shortly.">
 
-<br>
-<input name="Name" placeholder="Full Name" required><br><br>
-<input name="Phone" placeholder="Phone Number" required><br><br>
-<input name="Email" placeholder="Email Address" required><br><br>
+<!-- INPUTS (BIG) -->
+<input name="Name" placeholder="Full Name" required style="width:100%; padding:18px; margin:10px 0; font-size:16px;"><br>
+<input name="Phone" placeholder="Phone Number" required style="width:100%; padding:18px; margin:10px 0; font-size:16px;"><br>
+<input name="Email" placeholder="Email Address" required style="width:100%; padding:18px; margin:10px 0; font-size:16px;"><br>
 
-<input name="Company" placeholder="Company / Employer"><br><br>
+<input name="Company" placeholder="Company / Employer (Preferred Pricing)" style="width:100%; padding:18px; margin:10px 0; font-size:16px;"><br>
 
-<select name="Monthly Budget" required>
-<option value="">Monthly Budget</option>
-<option>$300-400</option>
-<option>$400-500</option>
-<option>$500-600</option>
-<option>$600+</option>
-</select><br><br>
+<select name="Monthly Budget" required style="width:100%; padding:18px; margin:10px 0; font-size:16px;">
+<option value="">Select Monthly Budget</option>
+<option>$300 - $400</option>
+<option>$400 - $500</option>
+<option>$500 - $600</option>
+<option>$600 - $700</option>
+<option>$700+</option>
+</select><br>
 
-<input name="Down Payment" placeholder="Down Payment"><br><br>
+<input name="Down Payment" placeholder="Down Payment ($)" style="width:100%; padding:18px; margin:10px 0; font-size:16px;"><br>
 
-<select id="brand" name="Brand" onchange="updateModels()" required>
+<!-- BRAND -->
+<select id="brand" name="Brand" onchange="updateModels()" required style="width:100%; padding:18px; margin:10px 0; font-size:16px;">
 <option value="">Select Brand</option>
 <option>Chevrolet</option>
 <option>GMC</option>
 <option>Buick</option>
 <option>Cadillac</option>
-</select><br><br>
+</select><br>
 
-<select id="model" name="Model" required>
+<!-- MODEL -->
+<select id="model" name="Model" required style="width:100%; padding:18px; margin:10px 0; font-size:16px;">
 <option>Select Model</option>
-</select><br><br>
+</select><br>
 
-<button type="submit">Submit</button>
+<!-- BIG BUTTON -->
+<button type="submit" style="width:100%; padding:18px; font-size:18px; background:#3b82f6; color:white; border:none; margin-top:15px;">
+Check My Pricing
+</button>
 
 </form>
+
+</div>
 
 <script>
 function updateModels() {
