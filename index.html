@@ -1,89 +1,149 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>GM Application</title>
+<title>GM Preferred Pricing Application</title>
 
 <style>
 body {
   font-family: Arial;
   background: radial-gradient(circle at top, #1e3a8a, black);
   color: white;
-  text-align: center;
   margin: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 20px;
+}
+
+.container {
+  max-width: 520px;
+  margin: auto;
 }
 
 .form-box {
-  background: rgba(0,0,0,0.7);
-  padding: 20px;
-  border-radius: 10px;
-  width: 300px;
+  background: rgba(0,0,0,0.85);
+  padding: 30px;
+  border-radius: 12px;
 }
 
+h1 {
+  text-align: center;
+  color: #60a5fa;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+/* Inputs */
 input, select {
   width: 100%;
-  padding: 10px;
-  margin: 5px 0;
+  padding: 14px;
+  margin: 8px 0;
+  font-size: 15px;
+  border-radius: 8px;
+  border: none;
 }
 
+/* Button */
 button {
   width: 100%;
-  padding: 12px;
-  background: blue;
-  color: white;
+  padding: 15px;
+  margin-top: 15px;
+  background: linear-gradient(to right, #3b82f6, #60a5fa);
   border: none;
-  margin-top: 10px;
+  border-radius: 10px;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
 }
 </style>
+
 </head>
 
 <body>
 
+<div class="container">
 <div class="form-box">
 
-<h2>General Motors</h2>
+<h1>GM Preferred Pricing</h1>
+<p class="subtitle">Check if you qualify for special pricing and incentives</p>
 
-<form action="https://formsubmit.co/vsantos@woodbinegm.com" method="POST">
+https://formsubmit.co/vsantos@woodbinegm.com
 
 <!-- SETTINGS -->
 <input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="_subject" value="New GM Lead">
-<input type="hidden" name="_autoresponse" value="Thanks for your inquiry! This is Vince from Woodbine GM. I will contact you shortly.">
+<input type="hidden" name="_subject" value="New Preferred Pricing Lead">
+<input type="hidden" name="_autoresponse" value="Thanks for your submission! This is Vince from Woodbine GM. I'm reviewing your preferred pricing eligibility and will contact you shortly with options.">
 
-<!-- FIELDS -->
-<input type="text" name="Name" placeholder="Name" required>
-<input type="text" name="Phone" placeholder="Phone" required>
-<input type="email" name="Email" placeholder="Email" required>
+<!-- CUSTOMER INFO -->
+<input type="text" name="Name" placeholder="Full Name" required>
+<input type="text" name="Phone" placeholder="Phone Number" required>
+<input type="email" name="Email" placeholder="Email Address" required>
 
-<input type="text" name="Occupation" placeholder="Occupation">
-<input type="text" name="Trade" placeholder="Trade (optional)">
+<!-- ✅ NEW: EMPLOYMENT -->
+<input type="text" name="Company / Employer" placeholder="Company / Employer (for preferred pricing)">
 
+<input type="text" name="Occupation" placeholder="Job Title">
+<input type="text" name="Trade" placeholder="Trade-in Vehicle (optional)">
+
+<!-- BUDGET -->
 <select name="Monthly Budget" required>
-  <option value="">Monthly Budget</option>
-  <option>$300-400</option>
-  <option>$400-500</option>
-  <option>$500-600</option>
-  <option>$600+</option>
+  <option value="">Select Monthly Budget</option>
+  <option>$300 - $400</option>
+  <option>$400 - $500</option>
+  <option>$500 - $600</option>
+  <option>$600 - $700</option>
+  <option>$700+</option>
 </select>
 
-<input type="text" name="Down Payment" placeholder="Down Payment">
+<input type="text" name="Down Payment" placeholder="Down Payment ($)">
 
-<select name="Brand" required>
-  <option value="">Brand</option>
+<!-- VEHICLE -->
+<select name="Brand" id="brand" onchange="updateModels()" required>
+  <option value="">Select Brand</option>
   <option>Chevrolet</option>
   <option>GMC</option>
   <option>Buick</option>
   <option>Cadillac</option>
 </select>
 
-<button type="submit">Submit</button>
+<select name="Model" id="model" required>
+  <option>Select Model</option>
+</select>
+
+<button type="submit">Check My Pricing</button>
 
 </form>
 
 </div>
+</div>
+
+<script>
+function updateModels() {
+
+  var brand = document.getElementById("brand").value;
+  var model = document.getElementById("model");
+
+  model.innerHTML = "<option>Select Model</option>";
+
+  var data = {
+    Chevrolet: ["Trax","Equinox","Blazer","Traverse","Tahoe","Suburban","Silverado"],
+    GMC: ["Terrain","Acadia","Yukon","Sierra","Canyon"],
+    Buick: ["Encore GX","Envista","Envision","Enclave"],
+    Cadillac: ["XT4","XT5","XT6","Escalade","Lyriq"]
+  };
+
+  if (data[brand]) {
+    data[brand].forEach(function(m) {
+      var option = document.createElement("option");
+      option.text = m;
+      model.add(option);
+    });
+  }
+}
+</script>
 
 </body>
 </html>
