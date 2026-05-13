@@ -1,98 +1,71 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>GM Preferred Pricing</title>
+<body style="font-family:Arial; background:black; color:white; text-align:center;">
 
-<style>
-body {
-  font-family: Arial;
-  background: radial-gradient(circle at top, #1e3a8a, black);
-  color: white;
-  margin: 0;
-  padding: 20px;
-}
+<h2>GM Preferred Pricing</h2>
 
-.container {
-  max-width: 520px;
-  margin: auto;
-}
-
-.form-box {
-  background: rgba(0,0,0,0.85);
-  padding: 30px;
-  border-radius: 12px;
-}
-
-h1 {
-  text-align: center;
-  color: #60a5fa;
-}
-
-input, select {
-  width: 100%;
-  padding: 14px;
-  margin: 8px 0;
-  border-radius: 8px;
-  border: none;
-}
-
-button {
-  width: 100%;
-  padding: 15px;
-  margin-top: 15px;
-  background: blue;
-  color: white;
-  border: none;
-  border-radius: 10px;
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-<div class="form-box">
-
-<h1>GM Preferred Pricing</h1>
-
-<!-- ✅ THIS FIXES SUBMIT -->
 <form action="https://formsubmit.co/vsantos@woodbinegm.com" method="POST">
 
 <input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="_subject" value="New Preferred Pricing Lead">
-<input type="hidden" name="_autoresponse" value="Thanks for your submission! This is Vince from Woodbine GM. I’ll contact you shortly.">
+<input type="hidden" name="_subject" value="New GM Lead">
+<input type="hidden" name="_autoresponse" value="Thanks for your inquiry! This is Vince from Woodbine GM. I will contact you shortly.">
 
-<input type="text" name="Name" placeholder="Full Name" required>
-<input type="text" name="Phone" placeholder="Phone Number" required>
-<input type="email" name="Email" placeholder="Email Address" required>
+<br>
+<input name="Name" placeholder="Full Name" required><br><br>
+<input name="Phone" placeholder="Phone Number" required><br><br>
+<input name="Email" placeholder="Email Address" required><br><br>
 
-<input type="text" name="Company" placeholder="Company / Employer">
+<input name="Company" placeholder="Company / Employer"><br><br>
 
 <select name="Monthly Budget" required>
-  <option value="">Monthly Budget</option>
-  <option>$300-400</option>
-  <option>$400-500</option>
-  <option>$500-600</option>
-  <option>$600+</option>
-</select>
+<option value="">Monthly Budget</option>
+<option>$300-400</option>
+<option>$400-500</option>
+<option>$500-600</option>
+<option>$600+</option>
+</select><br><br>
 
-<input type="text" name="Down Payment" placeholder="Down Payment ($)">
+<input name="Down Payment" placeholder="Down Payment"><br><br>
 
-<select name="Brand" required>
-  <option value="">Brand</option>
-  <option>Chevrolet</option>
-  <option>GMC</option>
-  <option>Buick</option>
-  <option>Cadillac</option>
-</select>
+<select id="brand" name="Brand" onchange="updateModels()" required>
+<option value="">Select Brand</option>
+<option>Chevrolet</option>
+<option>GMC</option>
+<option>Buick</option>
+<option>Cadillac</option>
+</select><br><br>
 
-<button type="submit">Check My Pricing</button>
+<select id="model" name="Model" required>
+<option>Select Model</option>
+</select><br><br>
+
+<button type="submit">Submit</button>
 
 </form>
 
-</div>
-</div>
+<script>
+function updateModels() {
+  var brand = document.getElementById("brand").value;
+  var model = document.getElementById("model");
+
+  var data = {
+    Chevrolet: ["Trax","Equinox","Blazer","Traverse","Tahoe","Suburban","Silverado"],
+    GMC: ["Terrain","Acadia","Yukon","Sierra","Canyon"],
+    Buick: ["Encore GX","Envista","Envision","Enclave"],
+    Cadillac: ["XT4","XT5","XT6","Escalade","Lyriq"]
+  };
+
+  model.innerHTML = "<option>Select Model</option>";
+
+  if (data[brand]) {
+    data[brand].forEach(function(m) {
+      var option = document.createElement("option");
+      option.text = m;
+      model.add(option);
+    });
+  }
+}
+</script>
 
 </body>
 </html>
-``
