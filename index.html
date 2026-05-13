@@ -7,27 +7,23 @@
 body {
   margin: 0;
   font-family: Arial;
-  background: url('https://images.unsplash.com/photo-1611403579043-d6c79e0f6296') no-repeat center center/cover;
-}
-
-.overlay {
-  background: rgba(0,0,0,0.75);
-  height: 100vh;
+  background: radial-gradient(circle at top, #1e3a8a, black);
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
 }
 
 .form-box {
   width: 320px;
   padding: 20px;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.7);
   border-radius: 10px;
   text-align: center;
 }
 
 h2 {
-  color: #5aa9ff;
+  color: #60a5fa;
 }
 
 input, select {
@@ -47,7 +43,6 @@ button {
   border-radius: 8px;
   color: white;
   font-size: 16px;
-  cursor: pointer;
 }
 </style>
 
@@ -55,51 +50,47 @@ button {
 
 <body>
 
-<div class="overlay">
 <div class="form-box">
 
 <h2>General Motors</h2>
 
 <form action="https://formsubmit.co/vsantos@woodbinegm.com" method="POST">
 
-<!-- ✅ Auto Response -->
-<input type="hidden" name="_autoresponse" value="Thanks for your inquiry! This is Vince from Woodbine GM. I’ve received your request and will be reaching out shortly to help you with your vehicle options.">
+<!-- Auto reply -->
+<input type="hidden" name="_autoresponse" value="Thanks for your inquiry! This is Vince from Woodbine GM. I’ll reach out shortly.">
 
-<!-- ✅ Email subject -->
-<input type="hidden" name="_subject" value="New GM Lead – Woodbine GM">
+<!-- Email subject -->
+<input type="hidden" name="_subject" value="New GM Lead">
 
-<!-- ✅ Disable captcha -->
+<!-- Turn off captcha -->
 <input type="hidden" name="_captcha" value="false">
 
 <input type="text" name="Name" placeholder="Name" required>
 <input type="text" name="Phone" placeholder="Phone" required>
 <input type="email" name="Email" placeholder="Email" required>
+
 <input type="text" name="Occupation" placeholder="Occupation">
 <input type="text" name="Trade" placeholder="Trade (optional)">
 
-<!-- ✅ NEW: Monthly Payment -->
-<select name="Monthly Payment Goal" required>
+<select name="Monthly Budget" required>
   <option value="">Select Monthly Budget</option>
-  <option>$300 - $400</option>
-  <option>$400 - $500</option>
-  <option>$500 - $600</option>
-  <option>$600 - $700</option>
+  <option>$300–$400</option>
+  <option>$400–$500</option>
+  <option>$500–$600</option>
+  <option>$600–$700</option>
   <option>$700+</option>
 </select>
 
-<!-- ✅ NEW: Down Payment -->
 <input type="text" name="Down Payment" placeholder="Down Payment ($)">
 
-<!-- BRAND -->
 <select name="Brand" id="brand" onchange="updateModels()" required>
   <option value="">Select Brand</option>
-  <option value="Chevrolet">Chevrolet</option>
-  <option value="GMC">GMC</option>
-  <option value="Buick">Buick</option>
-  <option value="Cadillac">Cadillac</option>
+  <option>Chevrolet</option>
+  <option>GMC</option>
+  <option>Buick</option>
+  <option>Cadillac</option>
 </select>
 
-<!-- MODEL -->
 <select name="Model" id="model" required>
   <option>Select Model</option>
 </select>
@@ -109,42 +100,30 @@ button {
 </form>
 
 </div>
-</div>
 
 <script>
 function updateModels() {
-
   var brand = document.getElementById("brand").value;
   var model = document.getElementById("model");
 
   model.innerHTML = "<option>Select Model</option>";
 
-  var models = [];
+  var data = {
+    Chevrolet: ["Trax","Equinox","Blazer","Traverse","Tahoe","Suburban","Silverado"],
+    GMC: ["Terrain","Acadia","Yukon","Sierra","Canyon"],
+    Buick: ["Encore GX","Envista","Envision","Enclave"],
+    Cadillac: ["XT4","XT5","XT6","Escalade","Lyriq"]
+  };
 
-  if (brand === "Chevrolet") {
-    models = ["Trax", "Equinox", "Blazer", "Traverse", "Tahoe", "Suburban", "Silverado"];
-  }
-
-  if (brand === "GMC") {
-    models = ["Terrain", "Acadia", "Yukon", "Sierra", "Canyon"];
-  }
-
-  if (brand === "Buick") {
-    models = ["Encore GX", "Envista", "Envision", "Enclave"];
-  }
-
-  if (brand === "Cadillac") {
-    models = ["XT4", "XT5", "XT6", "Escalade", "Lyriq"];
-  }
-
-  for (var i = 0; i < models.length; i++) {
-    var option = document.createElement("option");
-    option.text = models[i];
-    model.add(option);
+  if (data[brand]) {
+    data[brand].forEach(function(m) {
+      var option = document.createElement("option");
+      option.text = m;
+      model.add(option);
+    });
   }
 }
 </script>
 
 </body>
 </html>
-``
