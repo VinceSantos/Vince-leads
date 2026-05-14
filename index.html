@@ -1,28 +1,46 @@
 <!DOCTYPE html>
 <html>
-<body style="font-family:Arial; background:black; color:white; margin:0;">
+<head>
+<title>GM Approval Application</title>
+</head>
 
+<body style="font-family:Arial; margin:0; background:black; color:white;">
+
+<!-- ✅ HERO SECTION -->
+<div style="background:linear-gradient(to right, #1e3a8a, black); padding:50px 20px; text-align:center;">
+  
+  <h1 style="font-size:32px; margin-bottom:10px;">
+    Get Approved for a Vehicle Today
+  </h1>
+
+  <p style="font-size:18px; max-width:600px; margin:auto;">
+    Fast approval • All credit accepted • Find the right vehicle at the right payment
+  </p>
+
+</div>
+
+<!-- ✅ FORM SECTION -->
 <div style="max-width:700px; margin:auto; padding:30px;">
 
-<h1 style="text-align:center; color:#60a5fa;">GM Preferred Pricing</h1>
+<h2 style="text-align:center; color:#60a5fa;">Start Your Application</h2>
 
-<form action="https://formsubmit.co/vsantos@woodbinegm.com" method="POST">
+https://formsubmit.co/chivince2@icloud.com
 
 <input type="hidden" name="_captcha" value="false">
 <input type="hidden" name="_subject" value="New GM Lead">
-<input type="hidden" name="_autoresponse" value="Thanks for your inquiry! This is Vince from Woodbine GM. I will contact you shortly.">
+<input type="hidden" name="_autoresponse" value="Thanks for your application! This is Vince from Woodbine GM. I will contact you shortly with your approval options.">
 
-<!-- INFO -->
-<input name="Name" placeholder="Full Name" required style="width:100%; padding:16px; margin:8px 0;"><br>
-<input name="Phone" placeholder="Phone Number" required style="width:100%; padding:16px; margin:8px 0;"><br>
-<input name="Email" placeholder="Email Address" required style="width:100%; padding:16px; margin:8px 0;"><br>
+<!-- CUSTOMER INFO -->
+<input name="Name" placeholder="Full Name" required style="width:100%; padding:16px; margin:10px 0;"><br>
+<input name="Phone" placeholder="Phone Number" required style="width:100%; padding:16px; margin:10px 0;"><br>
+<input name="Email" placeholder="Email Address" required style="width:100%; padding:16px; margin:10px 0;"><br>
 
 <!-- EMPLOYMENT -->
-<input name="Company" placeholder="Company / Employer (Preferred Pricing)" style="width:100%; padding:16px; margin:8px 0;"><br>
+<input name="Company" placeholder="Company / Employer (helps with approvals)" style="width:100%; padding:16px; margin:10px 0;"><br>
 
 <!-- BUDGET -->
-<select name="Monthly Budget" required style="width:100%; padding:16px; margin:8px 0;">
-<option value="">Select Monthly Budget</option>
+<select name="Monthly Budget" required style="width:100%; padding:16px; margin:10px 0;">
+<option value="">Select Desired Monthly Payment</option>
 <option>$300 - $400</option>
 <option>$400 - $500</option>
 <option>$500 - $600</option>
@@ -30,10 +48,10 @@
 <option>$700+</option>
 </select><br>
 
-<input name="Down Payment" placeholder="Down Payment ($)" style="width:100%; padding:16px; margin:8px 0;"><br>
+<input name="Down Payment" placeholder="Down Payment ($)" style="width:100%; padding:16px; margin:10px 0;"><br>
 
-<!-- BRAND -->
-<select id="brand" name="Brand" onchange="updateModels()" required style="width:100%; padding:16px; margin:8px 0;">
+<!-- VEHICLE -->
+<select id="brand" name="Brand" onchange="updateModels()" required style="width:100%; padding:16px; margin:10px 0;">
 <option value="">Select Brand</option>
 <option>Chevrolet</option>
 <option>GMC</option>
@@ -41,12 +59,11 @@
 <option>Cadillac</option>
 </select><br>
 
-<!-- MODEL -->
-<select id="model" name="Model" required style="width:100%; padding:16px; margin:8px 0;">
+<select id="model" name="Model" required style="width:100%; padding:16px; margin:10px 0;">
 <option>Select Model</option>
 </select><br>
 
-<!-- BUTTON -->
+<!-- CTA -->
 <button type="submit" style="width:100%; padding:18px; font-size:18px; background:#3b82f6; color:white; border:none; margin-top:10px;">
 Get Approved Now
 </button>
@@ -55,7 +72,18 @@ Get Approved Now
 
 </div>
 
-<!-- MODEL SCRIPT -->
+<!-- ✅ TRUST SECTION -->
+<div style="background:#111; padding:30px; text-align:center;">
+  
+  <h3>Why Apply With Us?</h3>
+
+  <p>✔ Fast approvals<br>
+     ✔ Options for all credit<br>
+     ✔ Personalized vehicle matching</p>
+
+</div>
+
+<!-- ✅ SCRIPT -->
 <script>
 function updateModels() {
   var brand = document.getElementById("brand").value;
