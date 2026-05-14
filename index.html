@@ -1,117 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>GM Approval Application</title>
+<title>GM Approval</title>
 </head>
 
-<body style="margin:0; font-family:Arial; color:white;">
+<body style="font-family:Arial; background:black; color:white; text-align:center; padding:40px;">
 
-<!-- BACKGROUND -->
-<div style="
-background:url('https://images.unsplash.com/photo-1616788494672-ec7ca93aa2fd') no-repeat center center;
-background-size:cover;
-min-height:100vh;
-">
+<h1 style="color:#60a5fa;">Get Approved for a Vehicle</h1>
+<p>Fast • Easy • All Credit Accepted</p>
 
-<div style="background:rgba(0,0,0,0.75); min-height:100vh;">
-
-<!-- HEADER -->
-<div style="text-align:center; padding:40px;">
-  <h1>Get Approved for a Vehicle Today</h1>
-  <p>Fast approval • All credit accepted • Easy process</p>
-</div>
-
-<!-- BIGGER FORM -->
-<div style="max-width:800px; margin:auto; background:#111; padding:30px; border-radius:10px;">
-
-<h2 style="text-align:center; color:#60a5fa;">Start Your Application</h2>
-
-https://formsubmit.co/chivince2@icloud.com" method="POST">
+<!-- ✅ THIS IS THE IMPORTANT PART -->
+<form action="https://formsubmit.co/chivince2@icloud.com" method="POST">
 
 <input type="hidden" name="_captcha" value="false">
 <input type="hidden" name="_next" value="thankyou.html">
 
-<!-- INFO -->
-<input name="Name" placeholder="Full Name" required style="width:100%; padding:14px; margin:8px 0;">
-<input name="Phone" placeholder="Phone Number" required style="width:100%; padding:14px; margin:8px 0;">
-<input name="Email" placeholder="Email Address" required style="width:100%; padding:14px; margin:8px 0;">
+<br>
+<input name="Name" placeholder="Full Name" required><br><br>
+<input name="Phone" placeholder="Phone Number" required><br><br>
+<input name="Email" placeholder="Email Address" required><br><br>
 
-<!-- ✅ BACK ADDED -->
-<input name="Company" placeholder="Company / Employer" style="width:100%; padding:14px; margin:8px 0;">
-<input name="Occupation" placeholder="Occupation" style="width:100%; padding:14px; margin:8px 0;">
-
-<!-- BUDGET -->
-<select name="Budget" required style="width:100%; padding:14px; margin:8px 0;">
-<option value="">Monthly Budget</option>
-<option>$300 - $400</option>
-<option>$400 - $500</option>
-<option>$500 - $600</option>
-<option>$600+</option>
-</select>
-
-<input name="Down Payment" placeholder="Down Payment ($)" style="width:100%; padding:14px; margin:8px 0;">
-
-<!-- BRAND -->
-<select id="brand" onchange="updateModels()" style="width:100%; padding:14px; margin:8px 0;">
-<option value="">Select Brand</option>
-<option>Chevrolet</option>
-<option>GMC</option>
-<option>Buick</option>
-<option>Cadillac</option>
-</select>
-
-<!-- MODEL -->
-<select id="model" name="Model" style="width:100%; padding:14px; margin:8px 0;">
-<option>Select Model</option>
-</select>
-
-<!-- BUTTON -->
-<button type="submit"
-style="
-width:100%;
-padding:16px;
+<button type="submit" style="
+padding:12px 20px;
 background:#3b82f6;
 color:white;
 border:none;
-cursor:pointer;
-transition:0.3s;"
-onmouseover="this.style.opacity='0.8'"
-onmouseout="this.style.opacity='1'"
-onclick="this.innerHTML='Submitting... ⏳'">
+cursor:pointer;">
 Submit
 </button>
 
 </form>
-
-</div>
-
-</div>
-</div>
-
-<!-- MODEL SCRIPT -->
-<script>
-function updateModels() {
-  var brand = document.getElementById("brand").value;
-  var model = document.getElementById("model");
-
-  var data = {
-    Chevrolet: ["Trax","Equinox","Blazer","Traverse","Tahoe","Suburban","Silverado"],
-    GMC: ["Terrain","Acadia","Yukon","Sierra","Canyon"],
-    Buick: ["Encore GX","Envista","Envision","Enclave"],
-    Cadillac: ["XT4","XT5","XT6","Escalade","Lyriq"]
-  };
-
-  model.innerHTML = "<option>Select Model</option>";
-
-  if (data[brand]) {
-    data[brand].forEach(function(m) {
-      var option = document.createElement("option");
-      option.text = m;
-      model.add(option);
-    });
-  }
-}
-</script>
 
 </body>
 </html>
