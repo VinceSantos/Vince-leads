@@ -10,21 +10,9 @@ body {
   margin: 0;
   background: #0b0b0b;
   color: white;
-}
-
-/* HERO */
-.hero {
   text-align: center;
-  padding: 40px 20px;
-  background: linear-gradient(to right, #1e3a8a, black);
 }
 
-.logo {
-  width: 120px;
-  margin-bottom: 10px;
-}
-
-/* FORM */
 .container {
   max-width: 420px;
   margin: 30px auto;
@@ -48,27 +36,20 @@ button {
   color: white;
   border: none;
   cursor: pointer;
-  font-size: 16px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ✅ HERO -->
-<div class="hero">
-  <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/General_Motors_%282021%29.svg/512px-General_Motors_%282021%29.svg.png">
-  <h1>Get Approved for a GM Vehicle Today</h1>
-  <p>All Credit Accepted • Fast Approvals • Drive Today</p>
-</div>
+<h1 style="color:#60a5fa;">🚗 Get Approved Today</h1>
+<p>Fast • Easy • All Credit Accepted</p>
 
-<!-- ✅ FORM -->
 <div class="container">
 
 <form action="https://formsubmit.co/chivince2@icloud.com" method="POST">
 
 <input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="_subject" value="🔥 New GM Lead">
 <input type="hidden" name="_next" value="thankyou.html">
 
 <input name="Name" placeholder="Full Name" required>
@@ -86,6 +67,7 @@ button {
 <option>$700+</option>
 </select>
 
+<!-- MAKE -->
 <select id="brand" name="Brand" onchange="updateModels()" required>
 <option value="">Select Brand</option>
 <option value="Chevrolet">Chevrolet</option>
@@ -93,8 +75,14 @@ button {
 <option value="Buick">Buick</option>
 </select>
 
-<select id="model" name="Model" required>
+<!-- MODEL -->
+<select id="model" name="Model" onchange="updateTrims()" required>
 <option value="">Select Model</option>
+</select>
+
+<!-- TRIM -->
+<select id="trim" name="Trim" required>
+<option value="">Select Trim</option>
 </select>
 
 <button type="submit">Get Approved Now</button>
@@ -103,26 +91,58 @@ button {
 
 </div>
 
-<!-- ✅ SCRIPT -->
 <script>
+const models = {
+  Chevrolet: ["Trax", "Silverado", "Equinox", "Traverse", "Malibu", "Tahoe"],
+  GMC: ["Sierra", "Terrain", "Acadia", "Yukon"],
+  Buick: ["Encore GX", "Envista", "Envision", "Enclave"]
+};
+
+const trims = {
+  "Trax": ["LS", "1RS", "LT", "2RS", "ACTIV"],
+  "Silverado": ["WT", "Custom", "LT", "RST", "High Country"],
+  "Equinox": ["LS", "LT", "RS", "Premier"],
+  "Traverse": ["LS", "LT", "RS", "Z71"],
+  "Malibu": ["LS", "LT", "RS"],
+  "Tahoe": ["LS", "LT", "RST", "Z71", "High Country"],
+
+  "Sierra": ["Pro", "SLE", "Elevation", "SLT", "Denali"],
+  "Terrain": ["SLE", "SLT", "Denali"],
+  "Acadia": ["SLE", "SLT", "AT4", "Denali"],
+  "Yukon": ["SLE", "SLT", "AT4", "Denali"],
+
+  "Encore GX": ["Preferred", "Sport Touring", "Avenir"],
+  "Envista": ["Preferred", "Sport Touring", "Avenir"],
+  "Envision": ["Preferred", "Sport Touring", "Avenir"],
+  "Enclave": ["Preferred", "Sport Touring", "Avenir"]
+};
+
 function updateModels() {
-  var brand = document.getElementById("brand").value;
-  var model = document.getElementById("model");
+  const brand = document.getElementById("brand").value;
+  const model = document.getElementById("model");
+  const trim = document.getElementById("trim");
 
   model.innerHTML = "<option value=''>Select Model</option>";
+  trim.innerHTML = "<option value=''>Select Trim</option>";
 
-  var data = {
-    Chevrolet: ["Trax", "Silverado", "Equinox", "Traverse", "Malibu", "Tahoe"],
-    GMC: ["Sierra", "Terrain", "Acadia", "Yukon"],
-    Buick: ["Encore", "Encore GX", "Envision", "Enclave"]
-  };
-
-  if (data[brand]) {
-    data[brand].forEach(function(car) {
-      var option = document.createElement("option");
-      option.value = car;
-      option.text = car;
+  if (models[brand]) {
+    models[brand].forEach(function(m) {
+      let option = new Option(m, m);
       model.add(option);
+    });
+  }
+}
+
+function updateTrims() {
+  const modelSelected = document.getElementById("model").value;
+  const trim = document.getElementById("trim");
+
+  trim.innerHTML = "<option value=''>Select Trim</option>";
+
+  if (trims[modelSelected]) {
+    trims[modelSelected].forEach(function(t) {
+      let option = new Option(t, t);
+      trim.add(option);
     });
   }
 }
