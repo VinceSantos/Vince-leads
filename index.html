@@ -1,13 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>GM Approval</title>
+<title>GM Approval Application</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  font-family: Arial;
+  margin: 0;
+  background: black;
+  color: white;
+  text-align: center;
+}
+
+.container {
+  max-width: 400px;
+  margin: auto;
+  padding: 30px;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+</style>
 </head>
 
-<body style="font-family:Arial; background:black; color:white; text-align:center; padding:40px;">
+<body>
 
-<h1 style="color:#60a5fa;">🚗 Get Approved for a GM Vehicle</h1>
+<div class="container">
+
+<h1 style="color:#60a5fa;">🚗 Get Approved Today</h1>
 <p>Fast • Easy • All Credit Accepted</p>
 
 <form action="https://formsubmit.co/chivince2@icloud.com" method="POST">
@@ -15,42 +48,41 @@
 <input type="hidden" name="_captcha" value="false">
 <input type="hidden" name="_next" value="thankyou.html">
 
-<br>
-<input name="Name" placeholder="Full Name" required><br><br>
-<input name="Phone" placeholder="Phone Number" required><br><br>
-<input type="email" name="Email" placeholder="Email Address" required><br><br>
+<input name="Name" placeholder="Full Name" required>
+<input name="Phone" placeholder="Phone Number" required>
+<input type="email" name="Email" placeholder="Email Address" required>
+
+<input name="Occupation" placeholder="Occupation">
 
 <select name="Monthly Payment" required>
-<option value="">Monthly Payment</option>
-<option>$200 - $300</option>
+<option value="">Monthly Budget</option>
 <option>$300 - $400</option>
 <option>$400 - $500</option>
 <option>$500 - $600</option>
-<option>$600+</option>
-</select><br><br>
+<option>$600 - $700</option>
+<option>$700+</option>
+</select>
 
-<input name="Occupation" placeholder="Occupation"><br><br>
-
-<select id="make" name="Make" onchange="updateModels()" required>
+<select id="brand" name="Brand" onchange="updateModels()" required>
 <option value="">Select Brand</option>
 <option value="Chevrolet">Chevrolet</option>
 <option value="GMC">GMC</option>
 <option value="Buick">Buick</option>
-</select><br><br>
+</select>
 
 <select id="model" name="Model" required>
 <option value="">Select Model</option>
-</select><br><br>
+</select>
 
-<button type="submit" style="padding:12px 20px; background:#3b82f6; color:white; border:none;">
-Get Approved
-</button>
+<button type="submit">Get Approved</button>
 
 </form>
 
+</div>
+
 <script>
 function updateModels() {
-  var make = document.getElementById("make").value;
+  var brand = document.getElementById("brand").value;
   var model = document.getElementById("model");
 
   model.innerHTML = "<option value=''>Select Model</option>";
@@ -61,8 +93,8 @@ function updateModels() {
     Buick: ["Encore", "Encore GX", "Envision", "Enclave"]
   };
 
-  if (data[make]) {
-    data[make].forEach(function(car) {
+  if (data[brand]) {
+    data[brand].forEach(function(car) {
       var option = document.createElement("option");
       option.value = car;
       option.text = car;
