@@ -6,14 +6,13 @@
 
 <body style="margin:0; font-family:Arial; color:white;">
 
-<!-- ✅ BACKGROUND IMAGE -->
+<!-- BACKGROUND -->
 <div style="
 background:url('https://images.unsplash.com/photo-1616788494672-ec7ca93aa2fd') no-repeat center center;
 background-size:cover;
 min-height:100vh;
 ">
 
-<!-- ✅ DARK OVERLAY -->
 <div style="background:rgba(0,0,0,0.75); min-height:100vh;">
 
 <!-- HEADER -->
@@ -22,23 +21,27 @@ min-height:100vh;
   <p>Fast approval • All credit accepted • Easy process</p>
 </div>
 
-<!-- ✅ FORM -->
-<div style="max-width:600px; margin:auto; background:#111; padding:25px; border-radius:10px;">
+<!-- BIGGER FORM -->
+<div style="max-width:800px; margin:auto; background:#111; padding:30px; border-radius:10px;">
 
 <h2 style="text-align:center; color:#60a5fa;">Start Your Application</h2>
 
-<form action="https://formsubmit.co/chivince2@icloud.com" method="POST">
+https://formsubmit.co/chivince2@icloud.com" method="POST">
 
 <input type="hidden" name="_captcha" value="false">
 <input type="hidden" name="_next" value="thankyou.html">
 
 <!-- INFO -->
-<input name="Name" placeholder="Full Name" required style="width:100%; padding:12px; margin:8px 0;">
-<input name="Phone" placeholder="Phone Number" required style="width:100%; padding:12px; margin:8px 0;">
-<input name="Email" placeholder="Email Address" required style="width:100%; padding:12px; margin:8px 0;">
+<input name="Name" placeholder="Full Name" required style="width:100%; padding:14px; margin:8px 0;">
+<input name="Phone" placeholder="Phone Number" required style="width:100%; padding:14px; margin:8px 0;">
+<input name="Email" placeholder="Email Address" required style="width:100%; padding:14px; margin:8px 0;">
+
+<!-- ✅ BACK ADDED -->
+<input name="Company" placeholder="Company / Employer" style="width:100%; padding:14px; margin:8px 0;">
+<input name="Occupation" placeholder="Occupation" style="width:100%; padding:14px; margin:8px 0;">
 
 <!-- BUDGET -->
-<select name="Budget" required style="width:100%; padding:12px; margin:8px 0;">
+<select name="Budget" required style="width:100%; padding:14px; margin:8px 0;">
 <option value="">Monthly Budget</option>
 <option>$300 - $400</option>
 <option>$400 - $500</option>
@@ -46,8 +49,10 @@ min-height:100vh;
 <option>$600+</option>
 </select>
 
+<input name="Down Payment" placeholder="Down Payment ($)" style="width:100%; padding:14px; margin:8px 0;">
+
 <!-- BRAND -->
-<select id="brand" onchange="updateModels()" style="width:100%; padding:12px; margin:8px 0;">
+<select id="brand" onchange="updateModels()" style="width:100%; padding:14px; margin:8px 0;">
 <option value="">Select Brand</option>
 <option>Chevrolet</option>
 <option>GMC</option>
@@ -55,16 +60,16 @@ min-height:100vh;
 <option>Cadillac</option>
 </select>
 
-<!-- ✅ MODEL DROPDOWN -->
-<select id="model" name="Model" style="width:100%; padding:12px; margin:8px 0;">
+<!-- MODEL -->
+<select id="model" name="Model" style="width:100%; padding:14px; margin:8px 0;">
 <option>Select Model</option>
 </select>
 
-<!-- ✅ SUBMIT BUTTON (FINGER CURSOR) -->
+<!-- BUTTON -->
 <button type="submit"
 style="
 width:100%;
-padding:14px;
+padding:16px;
 background:#3b82f6;
 color:white;
 border:none;
@@ -80,15 +85,10 @@ Submit
 
 </div>
 
-<!-- FOOTER -->
-<div style="text-align:center; padding:20px;">
-✔ Fast • ✔ Easy • ✔ No pressure
-</div>
-
 </div>
 </div>
 
-<!-- ✅ MODEL SCRIPT -->
+<!-- MODEL SCRIPT -->
 <script>
 function updateModels() {
   var brand = document.getElementById("brand").value;
