@@ -1,25 +1,52 @@
 <!DOCTYPE html>
 <html>
-<body style="background:black; color:white; text-align:center; font-family:Arial;">
+<body style="font-family:Arial; background:black; color:white; margin:0;">
 
-<h2>Get Approved for a Vehicle</h2>
+<!-- HEADER -->
+<div style="text-align:center; padding:30px;">
+  <h1 style="color:#60a5fa;">Get Approved for a Vehicle Today</h1>
+  <p>Fast approval • All credit accepted • Easy process</p>
+</div>
 
-<form action="https://formsubmit.co/chivince2@icloud.com" method="POST">
+<!-- FORM BOX -->
+<div style="max-width:600px; margin:auto; background:#111; padding:20px; border-radius:10px;">
+
+@icloud.com" method="POST">
 
 <input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="_next" value="thankyou.html">
+<input type="hidden" name="_subject" value="New GM Lead">
+<input type="hidden" name="_autoresponse" value="Thanks! This is Vince from Woodbine GM. I will contact you shortly.">
 
-<br>
-<input name="Name" placeholder="Name" required><br><br>
-<input name="Phone" placeholder="Phone" required><br><br>
-<input name="Email" placeholder="Email" required><br><br>
+<!-- INPUTS -->
+<input name="Name" placeholder="Full Name" required style="width:100%; padding:12px; margin:8px 0;"><br>
+<input name="Phone" placeholder="Phone Number" required style="width:100%; padding:12px; margin:8px 0;"><br>
+<input name="Email" placeholder="Email Address" required style="width:100%; padding:12px; margin:8px 0;"><br>
 
-<button type="submit" 
-style="padding:12px; background:blue; color:white; border:none; cursor:pointer;">
+<select name="Budget" required style="width:100%; padding:12px; margin:8px 0;">
+<option value="">Monthly Budget</option>
+<option>$300-$400</option>
+<option>$400-$500</option>
+<option>$500-$600</option>
+<option>$600+</option>
+</select><br>
+
+<!-- ✅ BUTTON (WORKS + ANIMATION) -->
+<button type="submit"
+style="width:100%; padding:14px; background:#3b82f6; color:white; border:none; cursor:pointer; transition:0.3s;"
+onmouseover="this.style.opacity='0.8'"
+onmouseout="this.style.opacity='1'"
+onclick="this.innerHTML='Submitting... ⏳'">
 Submit
 </button>
 
 </form>
+
+</div>
+
+<!-- FOOTER -->
+<div style="text-align:center; padding:20px;">
+✔ Fast • ✔ Easy • ✔ No pressure
+</div>
 
 </body>
 </html>
