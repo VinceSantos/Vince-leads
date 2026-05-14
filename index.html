@@ -1,46 +1,44 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>GM Approval Application</title>
-</head>
+<body style="font-family:Arial; margin:0; color:white;">
 
-<body style="font-family:Arial; margin:0; background:black; color:white;">
+<!-- ✅ BACKGROUND IMAGE -->
+<div style="
+background:url('https://images.unsplash.com/photo-1616788494672-ec7ca93aa2fd') no-repeat center center;
+background-size:cover;
+min-height:100vh;
+">
 
-<!-- ✅ HERO SECTION -->
-<div style="background:linear-gradient(to right, #1e3a8a, black); padding:50px 20px; text-align:center;">
-  
-  <h1 style="font-size:32px; margin-bottom:10px;">
-    Get Approved for a Vehicle Today
-  </h1>
+<!-- DARK OVERLAY -->
+<div style="background:rgba(0,0,0,0.75); min-height:100vh;">
 
-  <p style="font-size:18px; max-width:600px; margin:auto;">
-    Fast approval • All credit accepted • Find the right vehicle at the right payment
-  </p>
-
+<!-- HEADER -->
+<div style="text-align:center; padding:40px;">
+  <h1>Get Approved for a Vehicle Today</h1>
+  <p>All Credit Accepted • Fast Approvals • Drive Today</p>
 </div>
 
-<!-- ✅ FORM SECTION -->
-<div style="max-width:700px; margin:auto; padding:30px;">
+<!-- FORM -->
+<div style="max-width:600px; margin:auto; background:#111; padding:30px; border-radius:10px;">
 
 <h2 style="text-align:center; color:#60a5fa;">Start Your Application</h2>
 
-https://formsubmit.co/chivince2@icloud.com
+<!-- ✅ CORRECT FORM (THIS FIXES EVERYTHING) -->
+<form action="https://formsubmit.co/chivince2@icloud.com" method="POST">
 
 <input type="hidden" name="_captcha" value="false">
 <input type="hidden" name="_subject" value="New GM Lead">
-<input type="hidden" name="_autoresponse" value="Thanks for your application! This is Vince from Woodbine GM. I will contact you shortly with your approval options.">
+<input type="hidden" name="_autoresponse" value="Thanks for your application! This is Vince from Woodbine GM. I will contact you shortly.">
 
-<!-- CUSTOMER INFO -->
-<input name="Name" placeholder="Full Name" required style="width:100%; padding:16px; margin:10px 0;"><br>
-<input name="Phone" placeholder="Phone Number" required style="width:100%; padding:16px; margin:10px 0;"><br>
-<input name="Email" placeholder="Email Address" required style="width:100%; padding:16px; margin:10px 0;"><br>
+<!-- INPUTS -->
+<input name="Name" placeholder="Full Name" required style="width:100%; padding:14px; margin:8px 0;"><br>
+<input name="Phone" placeholder="Phone Number" required style="width:100%; padding:14px; margin:8px 0;"><br>
+<input name="Email" placeholder="Email Address" required style="width:100%; padding:14px; margin:8px 0;"><br>
 
-<!-- EMPLOYMENT -->
-<input name="Company" placeholder="Company / Employer (helps with approvals)" style="width:100%; padding:16px; margin:10px 0;"><br>
+<input name="Company" placeholder="Company / Employer" style="width:100%; padding:14px; margin:8px 0;"><br>
 
-<!-- BUDGET -->
-<select name="Monthly Budget" required style="width:100%; padding:16px; margin:10px 0;">
-<option value="">Select Desired Monthly Payment</option>
+<select name="Monthly Budget" required style="width:100%; padding:14px; margin:8px 0;">
+<option value="">Monthly Budget</option>
 <option>$300 - $400</option>
 <option>$400 - $500</option>
 <option>$500 - $600</option>
@@ -48,10 +46,9 @@ https://formsubmit.co/chivince2@icloud.com
 <option>$700+</option>
 </select><br>
 
-<input name="Down Payment" placeholder="Down Payment ($)" style="width:100%; padding:16px; margin:10px 0;"><br>
+<input name="Down Payment" placeholder="Down Payment ($)" style="width:100%; padding:14px; margin:8px 0;"><br>
 
-<!-- VEHICLE -->
-<select id="brand" name="Brand" onchange="updateModels()" required style="width:100%; padding:16px; margin:10px 0;">
+<select id="brand" name="Brand" onchange="updateModels()" required style="width:100%; padding:14px; margin:8px 0;">
 <option value="">Select Brand</option>
 <option>Chevrolet</option>
 <option>GMC</option>
@@ -59,31 +56,28 @@ https://formsubmit.co/chivince2@icloud.com
 <option>Cadillac</option>
 </select><br>
 
-<select id="model" name="Model" required style="width:100%; padding:16px; margin:10px 0;">
+<select id="model" name="Model" required style="width:100%; padding:14px; margin:8px 0;">
 <option>Select Model</option>
 </select><br>
 
-<!-- CTA -->
-<button type="submit" style="width:100%; padding:18px; font-size:18px; background:#3b82f6; color:white; border:none; margin-top:10px;">
-Get Approved Now
+<!-- ✅ BUTTON (NOW WORKS) -->
+<button type="submit" style="width:100%; padding:16px; font-size:18px; background:#3b82f6; color:white; border:none; margin-top:10px;">
+Submit
 </button>
 
 </form>
 
 </div>
 
-<!-- ✅ TRUST SECTION -->
-<div style="background:#111; padding:30px; text-align:center;">
-  
-  <h3>Why Apply With Us?</h3>
-
-  <p>✔ Fast approvals<br>
-     ✔ Options for all credit<br>
-     ✔ Personalized vehicle matching</p>
-
+<!-- FOOTER -->
+<div style="text-align:center; padding:20px;">
+  ✔ Fast Approval • ✔ All Credit Welcome • ✔ Easy Process
 </div>
 
-<!-- ✅ SCRIPT -->
+</div>
+</div>
+
+<!-- MODEL SCRIPT -->
 <script>
 function updateModels() {
   var brand = document.getElementById("brand").value;
