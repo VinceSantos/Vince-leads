@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Get Approved Today</title>
+<title>GM Approval</title>
 
 <style>
 body {
@@ -48,23 +48,18 @@ button {
 button:hover {
     background: #2563eb;
 }
-
-.badge {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #9ca3af;
-}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-    <h1>🚗 Get Approved for a Vehicle</h1>
+    <h1>🚗 Get Approved for a GM Vehicle</h1>
     <p>Fast • Easy • All Credit Accepted</p>
 
+    <!-- ✅ FORM (FIXED) -->
     <form action="https://formsubmit.co/chivince2@icloud.com" method="POST">
-        
+
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_next" value="thankyou.html">
 
@@ -86,36 +81,63 @@ button:hover {
         <input type="text" name="Occupation" placeholder="Occupation">
 
         <!-- Make -->
-        <select name="Vehicle Make" required>
-            <option value="">Preferred Make</option>
-            <option>Toyota</option>
-            <option>Honda</option>
-            <option>Ford</option>
-            <option>Chevrolet</option>
-            <option>Nissan</option>
-            <option>BMW</option>
-            <option>Mercedes-Benz</option>
-            <option>Other</option>
+        <select id="make" name="Vehicle Make" required onchange="updateModels()">
+            <option value="">Select Brand</option>
+            <option value="Chevrolet">Chevrolet</option>
+            <option value="GMC">GMC</option>
+            <option value="Buick">Buick</option>
         </select>
 
         <!-- Model -->
-        <select name="Vehicle Model">
-            <option value="">Preferred Model</option>
-            <option>Civic</option>
-            <option>Corolla</option>
-            <option>CR-V</option>
-            <option>RAV4</option>
-            <option>F-150</option>
-            <option>Silverado</option>
-            <option>Altima</option>
-            <option>Other</option>
+        <select id="model" name="Vehicle Model" required>
+            <option value="">Select Model</option>
         </select>
 
         <button type="submit">Get Approved Now</button>
     </form>
-
-    <div class="badge">✅ No Obligation • ✅ Secure • ✅ Takes 30 Seconds</div>
 </div>
+
+<!-- ✅ SCRIPT FOR DYNAMIC MODELS -->
+<script>
+const models = {
+    Chevrolet: [
+        "Silverado 1500",
+        "Equinox",
+        "Traverse",
+        "Malibu",
+        "Tahoe",
+        "Suburban"
+    ],
+    GMC: [
+        "Sierra 1500",
+        "Terrain",
+        "Acadia",
+        "Yukon"
+    ],
+    Buick: [
+        "Encore",
+        "Encore GX",
+        "Envision",
+        "Enclave"
+    ]
+};
+
+function updateModels() {
+    const make = document.getElementById("make").value;
+    const modelSelect = document.getElementById("model");
+
+    modelSelect.innerHTML = '<option value="">Select Model</option>';
+
+    if (models[make]) {
+        models[make].forEach(function(model) {
+            const option = document.createElement("option");
+            option.value = model;
+            option.textContent = model;
+            modelSelect.appendChild(option);
+        });
+    }
+}
+</script>
 
 </body>
 </html>
