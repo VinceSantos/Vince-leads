@@ -22,14 +22,9 @@ body {
 
 h1 {
     color: #60a5fa;
-    margin-bottom: 10px;
 }
 
-p {
-    color: #cbd5f5;
-}
-
-input {
+input, select {
     width: 100%;
     padding: 12px;
     margin-top: 10px;
@@ -76,6 +71,45 @@ button:hover {
         <input type="text" name="Name" placeholder="Full Name" required>
         <input type="tel" name="Phone" placeholder="Phone Number" required>
         <input type="email" name="Email" placeholder="Email Address" required>
+
+        <!-- Monthly Payment -->
+        <select name="Monthly Payment" required>
+            <option value="">Desired Monthly Payment</option>
+            <option>$200 - $300</option>
+            <option>$300 - $400</option>
+            <option>$400 - $500</option>
+            <option>$500 - $600</option>
+            <option>$600+</option>
+        </select>
+
+        <!-- Occupation -->
+        <input type="text" name="Occupation" placeholder="Occupation">
+
+        <!-- Make -->
+        <select name="Vehicle Make" required>
+            <option value="">Preferred Make</option>
+            <option>Toyota</option>
+            <option>Honda</option>
+            <option>Ford</option>
+            <option>Chevrolet</option>
+            <option>Nissan</option>
+            <option>BMW</option>
+            <option>Mercedes-Benz</option>
+            <option>Other</option>
+        </select>
+
+        <!-- Model -->
+        <select name="Vehicle Model">
+            <option value="">Preferred Model</option>
+            <option>Civic</option>
+            <option>Corolla</option>
+            <option>CR-V</option>
+            <option>RAV4</option>
+            <option>F-150</option>
+            <option>Silverado</option>
+            <option>Altima</option>
+            <option>Other</option>
+        </select>
 
         <button type="submit">Get Approved Now</button>
     </form>
