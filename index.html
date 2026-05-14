@@ -1,141 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GM Approval</title>
-
-<style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background: #0f172a;
-    color: white;
-    text-align: center;
-}
-
-.container {
-    max-width: 400px;
-    margin: auto;
-    padding: 40px 20px;
-}
-
-h1 {
-    color: #60a5fa;
-}
-
-input, select {
-    width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    border-radius: 8px;
-    border: none;
-    font-size: 16px;
-}
-
-button {
-    width: 100%;
-    padding: 14px;
-    margin-top: 20px;
-    border: none;
-    border-radius: 8px;
-    background: #3b82f6;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #2563eb;
-}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body>
+<body style="font-family:Arial; background:black; color:white; text-align:center; padding:40px;">
 
-<div class="container">
-    <h1>🚗 Get Approved for a GM Vehicle</h1>
-    <p>Fast • Easy • All Credit Accepted</p>
+<h1 style="color:#60a5fa;">🚗 Get Approved for a GM Vehicle</h1>
+<p>Fast • Easy • All Credit Accepted</p>
 
-    <!-- ✅ FORM (FIXED) -->
-    <form action="https://formsubmit.co/chivince2@icloud.com" method="POST">
+<form action="https://formsubmit.co/chivince2@icloud.com" method="POST">
 
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_next" value="thankyou.html">
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_next" value="thankyou.html">
 
-        <input type="text" name="Name" placeholder="Full Name" required>
-        <input type="tel" name="Phone" placeholder="Phone Number" required>
-        <input type="email" name="Email" placeholder="Email Address" required>
+<br>
+<input name="Name" placeholder="Full Name" required><br><br>
+<input name="Phone" placeholder="Phone Number" required><br><br>
+<input type="email" name="Email" placeholder="Email Address" required><br><br>
 
-        <!-- Monthly Payment -->
-        <select name="Monthly Payment" required>
-            <option value="">Desired Monthly Payment</option>
-            <option>$200 - $300</option>
-            <option>$300 - $400</option>
-            <option>$400 - $500</option>
-            <option>$500 - $600</option>
-            <option>$600+</option>
-        </select>
+<select name="Monthly Payment" required>
+<option value="">Monthly Payment</option>
+<option>$200 - $300</option>
+<option>$300 - $400</option>
+<option>$400 - $500</option>
+<option>$500 - $600</option>
+<option>$600+</option>
+</select><br><br>
 
-        <!-- Occupation -->
-        <input type="text" name="Occupation" placeholder="Occupation">
+<input name="Occupation" placeholder="Occupation"><br><br>
 
-        <!-- Make -->
-        <select id="make" name="Vehicle Make" required onchange="updateModels()">
-            <option value="">Select Brand</option>
-            <option value="Chevrolet">Chevrolet</option>
-            <option value="GMC">GMC</option>
-            <option value="Buick">Buick</option>
-        </select>
+<select id="make" name="Make" onchange="updateModels()" required>
+<option value="">Select Brand</option>
+<option value="Chevrolet">Chevrolet</option>
+<option value="GMC">GMC</option>
+<option value="Buick">Buick</option>
+</select><br><br>
 
-        <!-- Model -->
-        <select id="model" name="Vehicle Model" required>
-            <option value="">Select Model</option>
-        </select>
+<select id="model" name="Model" required>
+<option value="">Select Model</option>
+</select><br><br>
 
-        <button type="submit">Get Approved Now</button>
-    </form>
-</div>
+<button type="submit" style="padding:12px 20px; background:#3b82f6; color:white; border:none;">
+Get Approved
+</button>
 
-<!-- ✅ SCRIPT FOR DYNAMIC MODELS -->
+</form>
+
 <script>
-const models = {
-    Chevrolet: [
-        "Silverado 1500",
-        "Equinox",
-        "Traverse",
-        "Malibu",
-        "Tahoe",
-        "Suburban"
-    ],
-    GMC: [
-        "Sierra 1500",
-        "Terrain",
-        "Acadia",
-        "Yukon"
-    ],
-    Buick: [
-        "Encore",
-        "Encore GX",
-        "Envision",
-        "Enclave"
-    ]
-};
-
 function updateModels() {
-    const make = document.getElementById("make").value;
-    const modelSelect = document.getElementById("model");
+  var make = document.getElementById("make").value;
+  var model = document.getElementById("model");
 
-    modelSelect.innerHTML = '<option value="">Select Model</option>';
+  model.innerHTML = "<option value=''>Select Model</option>";
 
-    if (models[make]) {
-        models[make].forEach(function(model) {
-            const option = document.createElement("option");
-            option.value = model;
-            option.textContent = model;
-            modelSelect.appendChild(option);
-        });
-    }
+  var data = {
+    Chevrolet: ["Trax", "Silverado", "Equinox", "Traverse", "Malibu", "Tahoe"],
+    GMC: ["Sierra", "Terrain", "Acadia", "Yukon"],
+    Buick: ["Encore", "Encore GX", "Envision", "Enclave"]
+  };
+
+  if (data[make]) {
+    data[make].forEach(function(car) {
+      var option = document.createElement("option");
+      option.value = car;
+      option.text = car;
+      model.add(option);
+    });
+  }
 }
 </script>
 
